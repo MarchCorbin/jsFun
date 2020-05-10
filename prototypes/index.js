@@ -1,3 +1,4 @@
+/* eslint-disable */
 const { kitties } = require('./datasets/kitties');
 const { clubs } = require('./datasets/clubs');
 const { mods } = require('./datasets/mods');
@@ -24,20 +25,19 @@ const { dinosaurs, humans, movies } = require('./datasets/dinosaurs');
 // DATASET: kitties from ./datasets/kitties
 const kittyPrompts = {
   orangeKittyNames() {
-
+   
     // Return an array of just the names of kitties who are orange e.g.
     // ['Tiger', 'Snickers']
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
 
-    // Annotation:
-    // Write your annotation here as a comment
+    const result =
+      kitties.filter(cat => cat.color === 'orange').map(cat => cat.name)
+    return result
   },
 
   sortByAge() {
     // Sort the kitties by their age
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = kitties.sort((a, b)=> b.age - a.age)
     return result;
 
     // Annotation:
@@ -58,10 +58,13 @@ const kittyPrompts = {
     // },
     // ...etc]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
-  }
-};
+    const result = kitties.map(cat => {
+     let oldkitties =  {name: cat.name, age: cat.age + 2, color: cat.color}
+     return oldkitties
+    }).sort((a, b) => b.age - a.age)
+    return result
+}
+}
 
 
 
@@ -89,8 +92,29 @@ const clubPrompts = {
     //   Pam: ['Drama', 'Art', 'Chess'],
     //   ...etc
     // }
+    let memberarray = []
+clubs.forEach(club => {
+  club.members.forEach(person => {
+    if(!memberarray.includes(person)){
+      memberarray.push(person)
+    }
+  })
+  return memberarray
+})
+  const result = clubs.reduce((acc, club) => {
+memberarray.forEach(member => {
+  if(!acc[member]){
+    acc[member] = []
+  }
+  if(club.members.includes(member)) {
+    acc[member].push(club.club)
+  }
+})
+return acc
+}, {})
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+console.log(memberarray)
+  
     return result;
 
     // Annotation:
@@ -126,13 +150,17 @@ const modPrompts = {
     //   { mod: 4, studentsPerInstructor: 8 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    const result = mods.map(modules => {
+      let modulars = {mod: modules.mod, studentsPerInstructor: modules.students / modules.instructors}
+      return modulars
+    }, {})
+    return result
+    }
 
     // Annotation:
     // Write your annotation here as a comment
   }
-};
+
 
 
 
