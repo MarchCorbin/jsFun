@@ -91,7 +91,7 @@ describe("PROTOTYPES", () => {
       })
     })
   }), describe("Mod Prompts", () => {
-    it.only("studentsPerMod", () => {
+    it("studentsPerMod", () => {
       const e = modPrompts.studentsPerMod();
       expect(e).to.deep.equal([{
         mod: 1,
@@ -425,7 +425,7 @@ describe("PROTOTYPES", () => {
       })
     })
   }), describe("Boss Prompts", () => {
-    it("bossLoyalty", () => {
+    it.only("bossLoyalty", () => {
       const e = bossPrompts.bossLoyalty();
       expect(e).to.deep.equal([{
         bossName: "Scar",
