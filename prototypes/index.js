@@ -732,12 +732,13 @@ const bossPrompts = {
     let bossesArray = Object.entries(bosses);
     let result = bossesArray.map((bossArray, i) => {
             let count = sidekicks.reduce((acc, currentValue) => {
-                      if (currentValue.boss === bossArray[1].name) {
-                                acc += currentValue.loyaltyToBoss;
-                                 }  return acc;   
-                                   }, 0);
-                             return { bossName : bossArray[1].name,     sidekickLoyalty : count}; 
-                                      }); return result;
+ if (currentValue.boss === bossArray[1].name) 
+  { 
+  acc += currentValue.loyaltyToBoss;
+   }  return acc;   
+    }, 0);
+ return { bossName : bossArray[1].name,     sidekickLoyalty : count}; 
+  }); return result;
     return result;
 
     // Annotation:
