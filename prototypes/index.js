@@ -189,7 +189,9 @@ const cakePrompts = {
     //    ..etc
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.map(cake => {
+      return {flavor: cake.cakeFlavor, inStock: cake.inStock}
+    })
     return result;
 
     // Annotation:
@@ -216,8 +218,14 @@ const cakePrompts = {
     // },
     // ..etc
     // ]
-
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    let stockCakes = []
+    const result = stockCakes
+    cakes.forEach(cake => {
+      if(cake.inStock > 0){
+        stockCakes.push(cake)
+      
+      }
+    })
     return result;
 
     // Annotation:
@@ -228,7 +236,9 @@ const cakePrompts = {
     // Return the total amount of cakes in stock e.g.
     // 59
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+     const result =  cakes.reduce((acc, cake) => {
+            return acc += cake.inStock
+          },0)
     return result;
 
     // Annotation:
@@ -240,7 +250,14 @@ const cakePrompts = {
     // every cake in the dataset e.g.
     // ['dutch process cocoa', 'toasted sugar', 'smoked sea salt', 'berries', ..etc]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.reduce((acc, cake) => {
+      cake.toppings.forEach(topping => {
+        if(!acc.includes(topping)){
+          acc.push(topping)
+        }
+      })
+      return acc
+    }, [])
     return result;
 
     // Annotation:
@@ -257,8 +274,17 @@ const cakePrompts = {
     //    'berries': 2,
     //    ...etc
     // }
+      const result = cakes.reduce((acc, cake) => {
+            cake.toppings.forEach(topping => {
+                  if (!acc[topping]) {
+                    acc[topping] = 1
+                  } else {
+                    acc[topping] ++
+                  }
+            })
+            return acc
+          },{})
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
     return result;
 
     // Annotation:
@@ -293,7 +319,9 @@ const classPrompts = {
     //   { roomLetter: 'G', program: 'FE', capacity: 29 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = classrooms.filter(room => {
+      return room.program == 'FE'
+    })
     return result;
 
     // Annotation:
@@ -308,7 +336,20 @@ const classPrompts = {
     //   beCapacity: 96
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = classrooms.reduce((acc, room) => {
+      if(!acc.feCapacity){
+        acc.feCapacity = 0
+      } else if(!acc.beCapacity){
+        acc.beCapacity = 0
+      }
+    if(room.program == 'FE'){
+      acc.feCapacity += room.capacity
+    } else {
+      acc.beCapacity += room.capacity
+    }
+    return acc
+  }, {})
+
     return result;
 
     // Annotation:
@@ -318,7 +359,7 @@ const classPrompts = {
   sortByCapacity() {
     // Return the array of classrooms sorted by their capacity (least capacity to greatest)
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = classrooms.sort((a, b) => (a.capacity - b.capacity))
     return result;
 
     // Annotation:
@@ -345,8 +386,14 @@ const bookPrompts = {
     //   'Catch-22', 'Treasure Island']
 
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    const result = books.filter(book => {
+      return (book.genre !== 'Horror' && book.genre !== 'True Crime')
+        
+      
+    })
+    return result.map(book => {
+     return book.title
+    })
 
     // Annotation:
     // Write your annotation here as a comment
@@ -583,7 +630,18 @@ const turingPrompts = {
     //  { name: 'Robbie', studentCount: 18 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = instructors.map((teacher) => {
+          let count = 0
+          cohorts.forEach((cohort) => {
+            if (teacher.module === cohort.module) {
+              count = cohort.studentCount
+            }
+          })
+          return {
+            name: teacher.name,
+            studentCount: count
+          }
+        })
     return result;
 
     // Annotation:
@@ -671,7 +729,16 @@ const bossPrompts = {
     //   { bossName: 'Scar', sidekickLoyalty: 16 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    let bossesArray = Object.entries(bosses);
+    let result = bossesArray.map((bossArray, i) => {
+            let count = sidekicks.reduce((acc, currentValue) => {
+ if (currentValue.boss === bossArray[1].name) 
+  { 
+  acc += currentValue.loyaltyToBoss;
+   }  return acc;   
+    }, 0);
+ return { bossName : bossArray[1].name,     sidekickLoyalty : count}; 
+  }); return result;
     return result;
 
     // Annotation:
